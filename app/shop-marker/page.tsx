@@ -8,7 +8,7 @@ import SelectionCard  from "@/components/ui/selection-card";
 import HelpCard  from "@/components/ui/help-card";
 import ImagePlaceholder  from "@/components/ui/image-placeholder";
 import ColorSelector  from "@/components/ui/color-selector";
-import {useState} from "react";
+import {useEffect, useRef, useState} from "react";
 
 
 export default function ShopMarker() {
@@ -16,6 +16,10 @@ export default function ShopMarker() {
     const [penAmount, setPenAmount] = useState<number | null>(null)
     const [color, setColor] = useState<Colors | null>(null)
     const [inkDisabled, setInkDisabled] = useState<boolean>(false)
+    const [inkAmount, setInkAmount] = useState<{color: Colors | null, amount: number}>({color: color, amount: 1})
+
+
+    const hasAutoScrolledRef = useRef(false)
 
     function handleSelection(name: MarkerName  | null) {
         setBrandSelected(name)
@@ -48,9 +52,17 @@ export default function ShopMarker() {
         setColor(color)
         setInkDisabled(true)
 
-        setTimeout( () => {
+        if (hasAutoScrolledRef.current) return
+        hasAutoScrolledRef.current = true
+
+        requestAnimationFrame(() => {
             document.getElementById('ink-selection')?.scrollIntoView({behavior: 'smooth'})
-        }, 100)
+        })
+
+        window.setTimeout(() => {
+            document.getElementById('more-inks')?.scrollIntoView({behavior: 'smooth'})
+            hasAutoScrolledRef.current = false
+        }, 1200)
     }
 
     return (
@@ -203,24 +215,36 @@ export default function ShopMarker() {
                     title={"Red Ink"}
                     price={"90"}
                     customStyle={'mt-[50px]'}
+                    name={Colors.RED}
+                    disable={inkDisabled}
+                    selected={color === Colors.RED}
                 />
 
                 <SelectionCard
                     title={"Black Ink"}
                     price={"80"}
                     customStyle={'mt-[20px]'}
+                    name={Colors.BLACK}
+                    disable={inkDisabled}
+                    selected={color === Colors.BLACK}
                 />
 
                 <SelectionCard
                     title={"Blue Ink"}
                     price={"80"}
                     customStyle={'mt-[20px]'}
+                    name={Colors.BLUE}
+                    disable={inkDisabled}
+                    selected={color === Colors.BLUE}
                 />
 
                 <SelectionCard
                     title={"Green Ink"}
                     price={"90"}
                     customStyle={'mt-[20px]'}
+                    name={Colors.GREEN}
+                    disable={inkDisabled}
+                    selected={color === Colors.GREEN}
                 />
 
                 <HelpCard
@@ -230,44 +254,47 @@ export default function ShopMarker() {
                 />
             </section>
 
-            <BodyHeader
-                highlightText={"More Inks"}
-                normalText={"Pick how much you need."}
-                customStyle={'mt-[30px] mb-[30px]'}
-            />
-            <SelectionCard
-                title={"01 Ink"}
-                price={"80"}
-                customStyle={'mt-[50px]'}
-            />
-            <SelectionCard
-                title={"02 Inks"}
-                subTitle={"lKR 50 Saving"}
-                price={"550"}
-                amount={2}
-                customStyle={'mt-[20px]'}
-            />
-            <SelectionCard
-                title={"06 Inks"}
-                subTitle={"lKR 50 Saving"}
-                price={"550"}
-                amount={6}
-                customStyle={'mt-[20px]'}
-            />
-            <SelectionCard
-                title={"12 Inks"}
-                subTitle={"lKR 50 Saving"}
-                price={"550"}
-                amount={12}
-                customStyle={'mt-[20px]'}
-            />
-            <SelectionCard
-                title={"24 Inks"}
-                subTitle={"lKR 50 Saving"}
-                price={"550"}
-                amount={24}
-                customStyle={'mt-[20px]'}
-            />
+            {/* More ink Section */}
+            <section id={'more-inks'}>
+                <BodyHeader
+                    highlightText={"More Inks"}
+                    normalText={"Pick how much you need."}
+                    customStyle={'mt-[30px] mb-[30px]'}
+                />
+                <SelectionCard
+                    title={"01 Ink"}
+                    price={"80"}
+                    customStyle={'mt-[50px]'}
+                />
+                <SelectionCard
+                    title={"02 Inks"}
+                    subTitle={"lKR 50 Saving"}
+                    price={"550"}
+                    amount={2}
+                    customStyle={'mt-[20px]'}
+                />
+                <SelectionCard
+                    title={"06 Inks"}
+                    subTitle={"lKR 50 Saving"}
+                    price={"550"}
+                    amount={6}
+                    customStyle={'mt-[20px]'}
+                />
+                <SelectionCard
+                    title={"12 Inks"}
+                    subTitle={"lKR 50 Saving"}
+                    price={"550"}
+                    amount={12}
+                    customStyle={'mt-[20px]'}
+                />
+                <SelectionCard
+                    title={"24 Inks"}
+                    subTitle={"lKR 50 Saving"}
+                    price={"550"}
+                    amount={24}
+                    customStyle={'mt-[20px]'}
+                />
+            </section>
         </div>
     )
 }

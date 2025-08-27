@@ -1,9 +1,9 @@
 'use client'
 
-import {MarkerName, PenAmount} from "@/constants/constants";
+import {MarkerName, PenAmount, Colors} from "@/constants/constants";
 
 interface SelectionCardProps {
-    name?: MarkerName | PenAmount,
+    name?: MarkerName | PenAmount | Colors,
     title: string,
     subTitle? : string,
     price?: string,
@@ -11,7 +11,7 @@ interface SelectionCardProps {
     customStyle? : string,
     disable? : boolean,
     selected? : boolean,
-    setSelection? : (name: MarkerName | PenAmount | null) => void,
+    setSelection? : (name: MarkerName | PenAmount | Colors | null) => void,
 }
 
 export default function SelectionCard(
