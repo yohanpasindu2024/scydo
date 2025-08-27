@@ -6,8 +6,6 @@ import {
     SheetContent,
     SheetDescription,
     SheetFooter,
-    SheetHeader,
-    SheetTitle,
 } from './sheet'
 import Link from "next/link";
 
@@ -24,10 +22,9 @@ export const MenuSheet = ({open, onOpenChange}: MenuSheetProps) => {
 
                 <SheetDescription className={"h-full pl-[30px] flex flex-col gap-[10px] justify-center"}>
                     <Link href={"/store"} onClick={() => onOpenChange(false)}><li className={"menu-text"}>Store</li></Link>
-                    <li className={"menu-text"}>GIXIN Markers</li>
-                    <li className={"menu-text"}>SOFTA Markers</li>
-                    <li className={"menu-text"}>GIXIN Refills</li>
-                    <li className={"menu-text"}>SOFTA Refills</li>
+                    <li className={"menu-text"}>Fashion Store</li>
+                    <li className={"menu-text"}>Education Hub</li>
+                    <li className={"menu-text"}>Outlyn Plus</li>
                     <li className={"menu-text"}>Account</li>
                     <li className={"menu-text"}>Contact</li>
                 </SheetDescription>
